@@ -1,0 +1,46 @@
+{
+  "version": "0.20.0",
+  "webFingerprint": "aa5656031e7aae149b97ae42252fd870e354ebf58d68dbc49fda3b59acf33fe3",
+  "files": [
+    {
+      "path": "Build/Web.data.unityweb",
+      "size": 7216088,
+      "sha256": "90488a352ae8ad2c455032affdfff5a77c58ee3043fe0db05abb31a410b1ccd8"
+    },
+    {
+      "path": "Build/Web.framework.js.unityweb",
+      "size": 84922,
+      "sha256": "e8bf129baeb19b9a0e96b958badcf561e25e5ec5aee603a09d87e0ad94c23191"
+    },
+    {
+      "path": "Build/Web.loader.js",
+      "size": 40317,
+      "sha256": "4adfc084b53f0ff7f0a85c6f03a15203351fd889d783d740b10ae123eb78f7ef"
+    },
+    {
+      "path": "Build/Web.wasm.unityweb",
+      "size": 5654685,
+      "sha256": "4ddcc0d1fe4bdc18df07d158351ac7e498bbcbc566f0858cc79e233a87ad1a86"
+    },
+    {
+      "path": "freight.png",
+      "size": 1364681,
+      "sha256": "816e4c59af3af0dc6d25038c0339985bfaac99984cd8485231ca78da8e080d03"
+    },
+    {
+      "path": "index.html",
+      "size": 8428,
+      "sha256": "2d3ca058ab2da136df857b89aaad2609a9af9f765af75faca6c1faf5ad4cdd4a"
+    },
+    {
+      "path": "storage.js",
+      "size": 2227,
+      "sha256": "0cf90c0b099d82d239c9ddec712918e9e859483bc8acd51522e7572361354296"
+    },
+    {
+      "path": "style.css",
+      "size": 4308,
+      "sha256": "5625136cf6d51f00917e33eb024a9b48ac45ab040014b1775f32e2eeaac57332"
+    }
+  ]
+}
