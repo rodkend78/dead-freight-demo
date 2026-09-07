@@ -8,11 +8,12 @@
  <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <header><a class="wordmark" href="./">DEAD FREIGHT<span>FIELD BUILD / 0.20.0</span></a>
+ <header><a class="wordmark" href="./">DEAD FREIGHT<span>FIELD BUILD / 0.25.0</span></a>
  <nav aria-label="Game settings">
   <label>Graphics <select id="quality"><option value="0">Performance</option><option value="1" selected>Balanced</option><option value="2">Reflections</option></select></label>
   <button id="sound" disabled aria-pressed="false">Sound on</button><button id="fullscreen" disabled>Fullscreen</button>
   <button id="backup" title="Download a backup of this browser's saved stash">Save backup</button>
+  <details id="more"><summary>More</summary><div class="more-menu"><button id="controls" disabled>Control settings</button><button id="restore">Restore backup</button><button id="notes" disabled>Playtest notes</button></div></details>
  </nav></header>
  <main id="stage">
   <canvas id="unity-canvas" width="1600" height="900" tabindex="0" aria-label="Dead Freight game. WASD move, Space jump, Shift dodge, mouse aim and fire, Escape pause."></canvas>
@@ -22,13 +23,14 @@
    <button id="start">Load Dead Freight <span>↗</span></button>
    <progress id="progress" max="1" value="0" hidden aria-label="Game download"></progress>
    <p id="load-status" role="status">Three connected districts. One life per run.</p>
-   <p class="requirements">Desktop keyboard + mouse · Local browser progress</p></div>
+   <p class="requirements">Desktop keyboard + mouse or controller · Local progress</p></div>
    <p class="scene-credit">IN-GAME / FLOODED RAIL DEPOT</p>
   </section>
   <section id="failure" hidden role="alert"><h2>Signal interrupted</h2><p id="error-text"></p><button onclick="location.reload()">Reload game</button></section>
  </main>
- <footer><p><kbd>WASD</kbd> move <kbd>Space</kbd> jump <kbd>Shift</kbd> dodge <kbd>G</kbd> utility <span class="extra"><kbd>R</kbd> reload <kbd>E</kbd> interact <kbd>M</kbd> map</span></p><p id="save-status" role="status">Your desktop stash stays separate.</p></footer>
- <script src="storage.js"></script><script src="Build/Web.loader.js"></script>
+ <footer><p>Controls and playtest notes in <strong>More</strong> · Back up your progress before switching browsers.</p><p id="save-status" role="status">Your desktop stash stays separate.</p></footer>
+ <dialog id="restore-dialog" aria-labelledby="restore-title"><h2 id="restore-title">Restore a stash</h2><p>This replaces this browser's stash and reloads the game. Your current saved stash becomes its backup.</p><label for="restore-file">Choose a Dead Freight JSON backup</label><input type="file" id="restore-file" accept=".json,application/json"><p id="restore-preview" role="status">No file selected.</p><div class="dialog-actions"><button id="restore-cancel">Cancel</button><button id="restore-confirm" disabled>Replace stash and reload</button></div></dialog>
+ <script src="storage.js"></script><script src="gamepad.js"></script><script src="Build/Web.loader.js"></script>
  <script>
   'use strict';
   const canvas=document.getElementById('unity-canvas'), start=document.getElementById('start'), welcome=document.getElementById('welcome'), progress=document.getElementById('progress'), loadStatus=document.getElementById('load-status');
@@ -57,7 +59,7 @@
     instance=await createUnityInstance(canvas,{
      arguments:window.deadFreightArguments,
      dataUrl:'Build/Web.data.unityweb',frameworkUrl:'Build/Web.framework.js.unityweb',codeUrl:'Build/Web.wasm.unityweb',
-     streamingAssetsUrl:'StreamingAssets',companyName:'Morrow Works',productName:'Dead Freight',productVersion:'0.20.0',devicePixelRatio:1,
+     streamingAssetsUrl:'StreamingAssets',companyName:'Morrow Works',productName:'Dead Freight',productVersion:'0.25.0',devicePixelRatio:1,
      showBanner:(message,type)=>{if(type==='error')fail(message);else console.warn(message);}
     },value=>{progress.value=value;loadStatus.textContent=value<.9?'Receiving freight… '+Math.round(value*100)+'%':'Opening the loading yard…';});
     window.deadFreightInstance=instance;
@@ -65,6 +67,7 @@
     send('Quality',document.getElementById('quality').value);
     loaded=true;start.disabled=false;start.textContent='Enter the yard  ↗';progress.hidden=true;loadStatus.textContent=qa?'ISOLATED PLAYTEST / separate test stash':'Signal ready. Click to enable sound and controls.';
     document.getElementById('sound').disabled=document.getElementById('fullscreen').disabled=false;
+    document.getElementById('controls').disabled=document.getElementById('notes').disabled=false;
    }catch(error){fail(error);}
   });
   window.addEventListener('deadfreight-status',event=>{
@@ -76,7 +79,7 @@
   window.addEventListener('blur',()=>send('Pause'));document.addEventListener('visibilitychange',()=>{if(document.hidden)send('Pause');});
   window.addEventListener('beforeunload',event=>{if(unsavedHaul){event.preventDefault();event.returnValue='';}});
   canvas.addEventListener('pointerdown',focusGame);canvas.addEventListener('contextmenu',e=>e.preventDefault());
-  canvas.addEventListener('keydown',e=>{if(['Space','Tab','ArrowUp','ArrowDown','F1','F2','F3'].includes(e.code))e.preventDefault();});
+  canvas.addEventListener('keydown',e=>{if(!window.deadFreightTextEntry&&['Space','Tab','ArrowUp','ArrowDown','F1','F2','F3','F4'].includes(e.code))e.preventDefault();});
   canvas.addEventListener('wheel',e=>e.preventDefault(),{passive:false});
   document.getElementById('quality').addEventListener('change',e=>send('Quality',e.target.value));
   document.getElementById('sound').addEventListener('click',e=>{muted=!muted;send('Mute',muted?'1':'0');e.currentTarget.textContent=muted?'Sound off':'Sound on';e.currentTarget.setAttribute('aria-pressed',String(muted));});
@@ -84,6 +87,27 @@
   function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
   document.getElementById('backup').addEventListener('click',()=>{try{const data=DeadFreightStorage.export();if(data)download(new Blob([data],{type:'application/json'}),'dead-freight-browser-stash.json');else document.getElementById('save-status').textContent='Deploy or complete a run to create your first save.';}catch(_){document.getElementById('save-status').textContent='Browser storage is unavailable.';}});
   window.addEventListener('deadfreight-screenshot',()=>requestAnimationFrame(()=>canvas.toBlob(blob=>{if(blob)download(blob,'dead-freight.png');})));
+  window.addEventListener('deadfreight-raid-report',e=>download(new Blob([e.detail],{type:'application/json'}),'dead-freight-raid-report.json'));
+  for(const pair of [['controls','Controls'],['notes','Feedback']])document.getElementById(pair[0]).addEventListener('click',()=>{document.getElementById('more').open=false;send(pair[1]);focusGame();});
+  const restoreDialog=document.getElementById('restore-dialog'),restoreFile=document.getElementById('restore-file'),restorePreview=document.getElementById('restore-preview'),restoreConfirm=document.getElementById('restore-confirm');let restoreText='';
+  async function requestRestore(){
+   if(!instance)return !start.disabled;
+   return new Promise(resolve=>{let timer;const listener=e=>{clearTimeout(timer);resolve(e.detail);};window.addEventListener('deadfreight-restore-gate',listener,{once:true});timer=setTimeout(()=>{window.removeEventListener('deadfreight-restore-gate',listener);resolve(false);},3000);send('PrepareRestore');});
+  }
+  document.getElementById('restore').addEventListener('click',async()=>{
+   document.getElementById('more').open=false;
+   if(!await requestRestore()){document.getElementById('save-status').textContent='Return to the stash and close in-game settings before restoring a backup.';return;}
+   restoreText='';restoreFile.value='';restoreConfirm.disabled=true;restorePreview.textContent='No file selected.';restoreDialog.showModal();
+  });
+  restoreFile.addEventListener('change',async()=>{
+   restoreText='';restoreConfirm.disabled=true;const file=restoreFile.files[0];if(!file)return;
+   try{if(file.size>1048576)throw Error('Choose a backup smaller than 1 MB.');const text=await file.text();if(file!==restoreFile.files[0]||!restoreDialog.open)return;const preview=DeadFreightStorage.previewBackup(text);restoreText=text;restorePreview.textContent=`${preview.salvage} banked salvage · ${preview.extractions} extractions · Dispatch ${preview.campaignStage}/3 · Weapons: ${preview.weapons.join(' / ')}`;restoreConfirm.disabled=false;}catch(error){restorePreview.textContent=error.message;}
+  });
+  document.getElementById('restore-cancel').addEventListener('click',()=>restoreDialog.close());restoreDialog.addEventListener('close',()=>{restoreText='';send('CancelRestore');});
+  restoreConfirm.addEventListener('click',async()=>{
+   restoreConfirm.disabled=true;
+   try{if(!restoreText||!await requestRestore())throw Error('Return to the stash before restoring.');DeadFreightStorage.importBackup(restoreText);location.reload();}catch(error){restorePreview.textContent=error.message;restoreConfirm.disabled=!restoreText;}
+  });
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();send('Pause');fail('The graphics device stopped responding. Reload to return to your saved stash.');});
   window.addEventListener('storage',e=>{if(e.key===DeadFreightStorage.key){send('Pause');document.getElementById('save-status').textContent='Progress changed in another tab. Reload before your next raid.';}});
  </script>
