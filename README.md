@@ -2,16 +2,18 @@
 
 [Play Dead Freight](https://rodkend78.github.io/dead-freight-demo/)
 
-Version 0.25.0. A solo extraction shooter with three connected industrial districts, climbable cover and roofs, a linked recovery campaign, earned field-kit sidegrades, optional freight incidents and a foreman overload fight.
+Version 0.26.0. A solo extraction shooter with three connected industrial districts, climbable cover and roofs, eight weapons, recoverable prototype designs and persistent equipment.
 
-Click **Load Dead Freight**, then **Enter the yard**. Select a weapon and press **Enter** to deploy. **WASD** moves, **Space** jumps, **Shift** dodges, mouse aims/fires, **R** reloads, **E** interacts, **Q** heals, and **G** throws your fitted utility. Hold **E** at extraction for five seconds to bank your haul. **Escape** pauses, **M** opens the map, and **F4** opens the dispatch file in preparation. **Inspect Kit** opens the rendered service bench.
+Click **Load Dead Freight**, then **Enter the yard**. Select a weapon and press **Enter** to deploy. **WASD** moves, **Space** jumps, **Shift** dodges, mouse aims/fires, **R** reloads, **E** interacts, **Q** heals and **G** throws your fitted utility. Hold **E** at extraction for five seconds to bank your haul. **Escape** pauses, **M** opens the map and **N** cycles guidance. **Inspect Kit** opens the service bench.
 
-**More → Control settings** remaps keyboard/mouse controls and shows the controller layout. Standard gamepad input is implemented; physical controller pairing and ergonomics remain unverified. Controller simulation is separate from real hardware acceptance.
+Arcwell charges a secondary shot on **RMB/LT**. Switchyard charges on **LMB/RT** and pierces up to three enemies. Conductor chains across visible targets. Severance cuts close targets and amber cabinet seams, with a battery and heat limit.
 
-Progress stays in this browser profile and website origin. **Save backup** downloads it; **More → Restore backup** previews an exported browser or native schema-1 stash before replacement. Restore requires preparation and keeps the previous save as a backup. Automatic cross-device sync is not implemented.
+Recover Severance in the east Morrow workshop, Switchyard after collecting the Ironworks gantry shipment and Conductor after depot drainage. Hold E at a field unit, then extract its design to unlock replacements in **Workbench → Prototype Recipes**. **Loadout → Show Prototypes → Track a Field Unit** sets recovery guidance. Recipes persist after later deaths; unbanked recoveries remain at risk.
 
-**More → Playtest notes** exports optional notes and a small current/last raid report. Nothing is uploaded. Choose whether to share the downloaded report yourself.
+**More → Control settings** remaps fifteen keyboard/mouse actions and shows the controller layout. Standard gamepad input is implemented; automated controller tests use virtual/API-simulated devices. Physical pairing and ergonomics remain unverified.
 
-This repository contains only the compiled Unity Web export and payload checksums. The editable project is maintained separately. No player saves, QA profiles or private project source are included.
+Progress stays in this browser profile and website origin. **Save backup** downloads it; **More → Restore backup** previews an exported browser or native stash before replacement. Old five-slot saves and current eight-slot saves are supported. Existing saves gain empty prototype slots and locked designs, and are rewritten only by a normal save action. The prior save remains backed up. Automatic cross-device sync is not implemented.
 
-Chrome, Firefox and WebKit test-engine coverage is distinguished in the private release validation. Shipping Safari, mobile controls and broad hardware acceptance remain unverified. Automated pilot results do not establish human difficulty or engagement.
+**More → Playtest notes** exports optional local notes and a raid report. Nothing is uploaded. This repository contains the compiled Unity Web export and payload checksums only. The editable project is maintained separately. Player saves, QA profiles and private source are excluded.
+
+Chrome, Firefox and WebKit test-engine coverage is recorded in the private release validation. Shipping Safari, mobile/touch input and broad hardware acceptance remain unverified. Automated pilot results do not establish human difficulty or engagement.

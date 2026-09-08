@@ -1,26 +1,26 @@
 {
-  "version": "0.25.0",
-  "webFingerprint": "dae515f46b5e0e7a517f8939903ed648be1d00afef1ced04b4eb19affe19b6d8",
+  "version": "0.26.0",
+  "webFingerprint": "862a654a40702f6bb262ec7fc9ab76f7b6c7e2b1f2f3b340658a05671b78533d",
   "files": [
     {
       "path": "Build/Web.data.unityweb",
-      "size": 7468138,
-      "sha256": "4663b017c7a4e54009f6ede5d0fd4ab1a4f51fd0ba57d44b2de2f5971587bce6"
+      "size": 7585926,
+      "sha256": "823522408b0a2f1ff1d58f2a9a8e9eafc8d52f0c2795dcd71ab0f93556eea92c"
     },
     {
       "path": "Build/Web.framework.js.unityweb",
-      "size": 86656,
-      "sha256": "fe190ea0ff77a2d3a5a3307468092b306f1ed4b6486c6fa633503c9e24f7ae68"
+      "size": 86670,
+      "sha256": "59ff106b6898b5bd27fd7c411d31042b2a14455fa82519570cdce5522b04ed37"
     },
     {
       "path": "Build/Web.loader.js",
       "size": 40317,
-      "sha256": "6bb387c9539ae578b7ddad04c2f96e68730830e073c50746a49cfc6a28aaea60"
+      "sha256": "3cc5cbd06d784b4d5f51413dd75e54e2ff68cfa15e3cf391aef9e918c119785e"
     },
     {
       "path": "Build/Web.wasm.unityweb",
-      "size": 6400649,
-      "sha256": "911e2b2691b81e894ccf394fc8cdbf1114f9352a8d127b96d747ad41e77e1f1a"
+      "size": 6420647,
+      "sha256": "827f0327a933f45abb109de45730b12180353c2474ee4ee91de46294125bd14c"
     },
     {
       "path": "freight.png",
@@ -34,13 +34,13 @@
     },
     {
       "path": "index.html",
-      "size": 11948,
-      "sha256": "09346edc0a9530ab71292cad7ea46eac408f3ddeb60a99575e2c54ef46c14101"
+      "size": 12036,
+      "sha256": "862b31f06bd320319084b136ce98b4a72a060e9d12b0057ce5b16ae6d983706c"
     },
     {
       "path": "storage.js",
-      "size": 5438,
-      "sha256": "2c797a749303c3e93ba20d58ce6bece7069d3c09969265e04c2edb9711a60618"
+      "size": 5683,
+      "sha256": "f4aa6f48832af7d8b8ac4c73cbe76834f42e90b1fbf825dc05ab095b1d671437"
     },
     {
       "path": "style.css",
