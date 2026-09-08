@@ -8,12 +8,12 @@
  <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <header><a class="wordmark" href="./">DEAD FREIGHT<span>FIELD BUILD / 0.27.0</span></a>
+ <header><a class="wordmark" href="./">DEAD FREIGHT<span>FIELD BUILD / 0.28.0</span></a>
  <nav aria-label="Game settings">
   <label>Graphics <select id="quality"><option value="0">Performance</option><option value="1" selected>Balanced</option><option value="2">Reflections</option></select></label>
   <button id="sound" disabled aria-pressed="false">Sound on</button><button id="fullscreen" disabled>Fullscreen</button>
   <button id="backup" title="Download a backup of this browser's saved stash">Save backup</button>
-  <details id="more"><summary>More</summary><div class="more-menu"><button id="controls" disabled>Control settings</button><button id="restore">Restore backup</button><button id="notes" disabled>Playtest notes</button></div></details>
+  <details id="more"><summary>More</summary><div class="more-menu"><button id="controls" disabled>Control settings</button><button id="squad" disabled>Squad intelligence</button><button id="restore">Restore backup</button><button id="notes" disabled>Playtest notes</button></div></details>
  </nav></header>
  <main id="stage">
   <canvas id="unity-canvas" width="1600" height="900" tabindex="0" aria-label="Dead Freight game. WASD move, Space jump, Shift dodge, mouse aim and fire, Escape pause."></canvas>
@@ -59,7 +59,7 @@
     instance=await createUnityInstance(canvas,{
      arguments:window.deadFreightArguments,
      dataUrl:'Build/Web.data.unityweb',frameworkUrl:'Build/Web.framework.js.unityweb',codeUrl:'Build/Web.wasm.unityweb',
-     streamingAssetsUrl:'StreamingAssets',companyName:'Morrow Works',productName:'Dead Freight',productVersion:'0.27.0',devicePixelRatio:1,
+     streamingAssetsUrl:'StreamingAssets',companyName:'Morrow Works',productName:'Dead Freight',productVersion:'0.28.0',devicePixelRatio:1,
      showBanner:(message,type)=>{if(type==='error')fail(message);else console.warn(message);}
     },value=>{progress.value=value;loadStatus.textContent=value<.9?'Receiving freight… '+Math.round(value*100)+'%':'Opening the loading yard…';});
     window.deadFreightInstance=instance;
@@ -67,7 +67,7 @@
     send('Quality',document.getElementById('quality').value);
     loaded=true;start.disabled=false;start.textContent='Enter the yard  ↗';progress.hidden=true;loadStatus.textContent=qa?'ISOLATED PLAYTEST / separate test stash':'Signal ready. Click to enable sound and controls.';
     document.getElementById('sound').disabled=document.getElementById('fullscreen').disabled=false;
-    document.getElementById('controls').disabled=document.getElementById('notes').disabled=false;
+    document.getElementById('controls').disabled=document.getElementById('notes').disabled=document.getElementById('squad').disabled=false;
    }catch(error){fail(error);}
   });
   window.addEventListener('deadfreight-status',event=>{
@@ -89,6 +89,7 @@
   window.addEventListener('deadfreight-screenshot',()=>requestAnimationFrame(()=>canvas.toBlob(blob=>{if(blob)download(blob,'dead-freight.png');})));
   window.addEventListener('deadfreight-raid-report',e=>download(new Blob([e.detail],{type:'application/json'}),'dead-freight-raid-report.json'));
   for(const pair of [['controls','Controls'],['notes','Feedback']])document.getElementById(pair[0]).addEventListener('click',()=>{document.getElementById('more').open=false;send(pair[1]);focusGame();});
+  document.getElementById('squad').addEventListener('click',()=>{document.getElementById('more').open=false;if(instance)instance.SendMessage('Squad commander','OpenPanel','');focusGame();});
   const restoreDialog=document.getElementById('restore-dialog'),restoreFile=document.getElementById('restore-file'),restorePreview=document.getElementById('restore-preview'),restoreConfirm=document.getElementById('restore-confirm');let restoreText='';
   async function requestRestore(){
    if(!instance)return !start.disabled;
