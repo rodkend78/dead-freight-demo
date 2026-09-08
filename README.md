@@ -2,9 +2,9 @@
 
 [Play Dead Freight](https://rodkend78.github.io/dead-freight-demo/)
 
-Version 0.26.0. A solo extraction shooter with three connected industrial districts, climbable cover and roofs, eight weapons, recoverable prototype designs and persistent equipment.
+Version 0.27.0. A solo extraction shooter with three connected industrial districts, climbable cover and roofs, eight weapons, recoverable prototype designs and persistent equipment.
 
-Click **Load Dead Freight**, then **Enter the yard**. Select a weapon and press **Enter** to deploy. **WASD** moves, **Space** jumps, **Shift** dodges, mouse aims/fires, **R** reloads, **E** interacts, **Q** heals and **G** throws your fitted utility. Hold **E** at extraction for five seconds to bank your haul. **Escape** pauses, **M** opens the map and **N** cycles guidance. **Inspect Kit** opens the service bench.
+Click **Load Dead Freight**, then **Enter the yard**. Select a weapon and press **Enter** to deploy. **WASD** moves, **Space** jumps, **Shift** dodges, mouse aims/fires, **R** reloads, **E** interacts, **Q** heals and **G** throws your fitted utility. Hold **E** at extraction for five seconds to bank your haul. **Escape** pauses, **M** opens the map and **N** cycles guidance. **Inspect Kit** opens a closer three-quarter Character view; rotate it or choose Full Kit / Weapon. The detailed scavenger and five enemy identities feature layered armor, clearer materials and fitted role equipment. The gameplay camera now defaults to 13 m / 38 degrees. Mouse wheel zooms, [ / ] tilts and C resets. Custom camera preferences are preserved.
 
 Arcwell charges a secondary shot on **RMB/LT**. Switchyard charges on **LMB/RT** and pierces up to three enemies. Conductor chains across visible targets. Severance cuts close targets and amber cabinet seams, with a battery and heat limit.
 
